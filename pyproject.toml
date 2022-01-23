@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Poetry plugin that makes it possible to build projects with custom TOML files."
 authors = ["David Vujic"]
 homepage = "https://github.com/davidvujic/poetry-multiproject-plugin"

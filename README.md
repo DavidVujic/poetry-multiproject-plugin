@@ -33,7 +33,7 @@ my-other-package/
    __init__.py
    my_other_package.py
 
-pypyproject.toml
+pyproject.toml
 my-app.toml
 my-service.toml
 ...

@@ -1,21 +1,24 @@
 from poetry.console.application import Application
 from poetry.plugins.application_plugin import ApplicationPlugin
 
-from poetry_multiproject_plugin import command
-
-
-def factory():
-    return command.ProjectBuildCommand()
+from poetry_multiproject_plugin.commands import project_build
 
 
 class MultiProjectPlugin(ApplicationPlugin):
-    """A Poetry plugin that makes it possible to build projects with custom TOML files.
+    """
+    A Poetry plugin, adding commands that supports including packages outside of the project root.
+    This is achieved by setting the workspace (or commonly the repo) folder as the root folder,
+    and being able to specify a project specific TOML file.
 
     Usage:
-    poetry build-project --t myproject.toml
+    running the command from the workspace root folder
+    `poetry build-project --t path/to/myproject.toml`
+
+    Optionally, run the command from the same folder as the actual project specific TOML file:
+    `poetry build-project`
     """
 
     def activate(self, application: Application):
         application.command_loader.register_factory(
-            command.ProjectBuildCommand.name, factory
+            project_build.command_name, project_build.ProjectBuildCommand
         )

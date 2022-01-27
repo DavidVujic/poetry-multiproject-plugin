@@ -1,52 +1,80 @@
 # Poetry Multiproject Plugin
 
-This is a `Poetry` plugin that will make it possible to build projects using custom TOML files.
+This is a Python `Poetry` plugin, adding commands with support for including packages outside of a project root.
 
-This is especially useful when structuring code in a Monorepo, containing several projects.
+This is achieved by setting the workspace (or commonly the repo) folder as the root folder.
+Also, the plugin makes it possible specify a project specific TOML file.
 
-When installed, there will be a new command available: `build-project`.
-
-## How is it different from the "poetry build" command?
-As I understand it, Poetry doesn't allow to reference code that is outside of the __project__ root.
-
-Something like:
+Example usage:
+running the command from the workspace root folder
 
 ``` shell
-packages = [{ include = "../../../my-package" }]
-
+poetry build-project --t path/to/myproject.toml
 ```
 
-As an alternative to have a `pyproject.toml` file in a subfolder, this plugin supports a Monorepo file structure like this:
+Optionally, run the command from the same folder as the actual project specific TOML file:
 
+``` shell
+poetry build-project
 ```
-my-app/
-   app.py
 
-my-service/
-   app.py
+## Why?
+Being able to specify package includes outside of a project root is especially
+useful when structuring code in a Monorepo, where projects can share components.
 
-my-package/
+When the plugin is installed, there is a new command available: `build-project`.
+
+## How is it different from the "poetry build" command?
+Poetry doesn't seem allow to reference code that is outside of the __project__ root.
+
+Something like this will cause the build to fail:
+
+``` shell
+# this will fail using the default poetry build command
+
+packages = [
+    { include = "the_code_in_my_project"
+    { include = "../../../my-shared-package" }]
+```
+
+By explicitly setting a workspace root, it is possible to reference outside components like this:
+
+``` shell
+packages = [
+    { include = "my/project/path/the_code_in_my_project"
+    { include = "shared/a-shared-package" }]
+```
+
+The project specific code is referenced with a path starting from the workspace root. The external includes can now be
+referenced as if the project specific TOML were located at the root.
+
+
+``` shell
+projects/
+  my-app/
+    pyproject.toml (including a shared package)
+    app.py
+
+  my-service/
+    pyproject.toml (including other shared packages)
+    app.py
+
+shared/
+  my-package/
    __init__.py
-   my_package.py
+   code.py
 
-my-other-package/
+  my-other-package/
    __init__.py
-   my_other_package.py
+   code.py
 
-pyproject.toml
-my-app.toml
-my-service.toml
-...
+.workspace (a file that tells the plugin where to find the workspace root)
 ```
 
-The different `TOML` files can include different local dependencies.
-Let's say that `my-app` imports `my-package`, and `my-service` imports `my-package` only.
-
-`my-app` and `my-service` can be built separately and include the local packages needed. By being placed at the __workspace__ root, will not cause
-any issues with relative paths.
+As a fallback, the plugin will look for a `pyproject.toml` or a `.git` folder to determine the workspace root.
 
 
-## Usage
+## Using the preview of Poetry
 This plugin depends on a preview of [Poetry](https://python-poetry.org/) with functionality for adding custom Plugins.
 Have a look at the [official Poetry preview docs](https://python-poetry.org/docs/master/) for how to install it.
 
@@ -54,11 +82,10 @@ Install the plugin according to the [official Poetry docs](https://python-poetry
 
 When installed, there will be a new command available: `build-project`.
 
-This command will build your project, just like the `poetry build` command, but with a custom project TOML file.
 
-``` shell
-poetry build-project --t myproject.toml
-```
+## Modifying the Poetry internals
+Setting the workspace root is done by altering the internal properties of the Poetry objects.
+This is (naturally) a risk, an update of the Poetry tool could break the functionality of the plugin.
 
-(use `--t` or `--toml` to specify your custom TOML file to use)
-
+A long-term goal is to make a Pull Request to the Poetry repository, making this kind of functionality available
+in there. If (when?) that is done, this plugin would no longer be necessary.

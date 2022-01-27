@@ -89,3 +89,9 @@ This is (naturally) a risk, an update of the Poetry tool could break the functio
 
 A long-term goal is to make a Pull Request to the Poetry repository, making this kind of functionality available
 in there. If (when?) that is done, this plugin would no longer be necessary.
+
+## What's next? Any other commands?
+Starting with the `build-project` command, and planning to add more custom commands that are
+relevant when using a project specific TOML file.
+
+Maybe continue with a `install-project` command?

@@ -3,13 +3,14 @@
 This is a Python `Poetry` plugin, adding commands with support for including packages outside of a project root.
 
 This is achieved by setting the workspace (or commonly the repo) folder as the root folder.
-Also, the plugin makes it possible specify a project specific TOML file.
+Also, the plugin makes it possible specify a project specific `pyproject.toml` file,
+useful when running commands from the workspace root.
 
 Example usage:
 running the command from the workspace root folder
 
 ``` shell
-poetry build-project --t path/to/myproject.toml
+poetry build-project --t path/to/pyproject.toml
 ```
 
 Optionally, run the command from the same folder as the actual project specific TOML file:
@@ -46,7 +47,7 @@ packages = [
 ```
 
 The project specific code is referenced with a path starting from the workspace root. The external includes can now be
-referenced as if the project specific TOML were located at the root.
+referenced as if the project specific `pyproject.toml` were located at the root.
 
 
 ``` shell

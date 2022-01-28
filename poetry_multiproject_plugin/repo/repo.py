@@ -26,6 +26,6 @@ def find_repo_root(cwd: Path) -> Path | None:
 def find_workspace_root(cwd: Path) -> Path | None:
     return (
         find_upwards_dir(cwd, workspace_file)
-        or find_upwards_dir(cwd, default_toml)
+        or find_upwards_dir(cwd.parent, default_toml)
         or find_repo_root(cwd)
     )

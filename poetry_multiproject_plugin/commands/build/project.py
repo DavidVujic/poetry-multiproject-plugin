@@ -1,7 +1,9 @@
+from pathlib import Path
+
 from cleo.helpers import option
 from poetry.console.commands.build import BuildCommand
-from poetry_multiproject_plugin.overrides import poetry_override
-from poetry_multiproject_plugin.repo import repo
+from poetry_multiproject_plugin.overrides import builders, workspace_aware_poetry
+from poetry_multiproject_plugin.workspace import workspaces
 
 command_name = "build-project"
 command_options = BuildCommand.options + [
@@ -14,8 +16,10 @@ class ProjectBuildCommand(BuildCommand):
     options = command_options
 
     def handle(self) -> None:
-        toml = self.option("toml") or repo.default_toml
-        modified = poetry_override.create_modified_poetry(self.poetry, toml)
+        toml = self.option("toml") or workspaces.default_toml
+
+        workspace = workspaces.find_workspace_root(Path.cwd())
+        modified = workspace_aware_poetry.create(self.poetry, toml)
 
         self.set_poetry(modified)
 
@@ -23,5 +27,7 @@ class ProjectBuildCommand(BuildCommand):
             f"Project file <c1>{modified.file.resolve()}</c1>"
             f"\nWorkspace <c1>{modified.file.parent}</c1>"
         )
+
+        builders.overrride(workspace)
 
         super(ProjectBuildCommand, self).handle()

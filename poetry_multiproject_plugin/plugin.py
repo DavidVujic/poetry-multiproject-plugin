@@ -15,7 +15,7 @@ class MultiProjectPlugin(ApplicationPlugin):
 
     Usage:
     running the command from the workspace root folder
-    `poetry build-project --t path/to/myproject.toml`
+    `poetry build-project -t path/to/myproject.toml`
 
     Optionally, run the command from the same folder as the actual project specific TOML file:
     `poetry build-project`

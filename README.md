@@ -10,7 +10,7 @@ Example usage:
 running the command from the workspace root folder
 
 ``` shell
-poetry build-project --t path/to/pyproject.toml
+poetry build-project -t path/to/pyproject.toml
 ```
 
 Optionally, run the command from the same folder as the actual project specific TOML file:

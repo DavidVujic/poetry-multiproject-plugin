@@ -20,14 +20,14 @@ poetry build-project
 ```
 
 ## Workspace?
-A workspace is a place for code and projects. Within the workspace, code can be shared. A workspace is normally at the root
+A workspace is a place for code and projects. Within the workspace, code can be shared. A workspace is usually at the root
 of your repository. To enable your Python project as a workspace, just add an empty `workspace.toml` file at the top.
 
 ``` shell
 touch workspace.toml
 ```
 
-The `poetry-multiproject-plugin` will look for the `workspace.toml` file to determine the workspace root.
+The plugin will look for the `workspace.toml` file to determine the workspace root.
 
 
 ## Why workspaces?

@@ -19,7 +19,18 @@ Optionally, run the command from the same folder as the actual project specific 
 poetry build-project
 ```
 
-## Why?
+## Workspace?
+A workspace is a place for code and projects. Within the workspace, code can be shared. A workspace is normally at the root
+of your repository. To enable your Python project as a workspace, just add an empty `workspace.toml` file at the top.
+
+``` shell
+touch workspace.toml
+```
+
+The `poetry-multiproject-plugin` will look for the `workspace.toml` file to determine the workspace root.
+
+
+## Why workspaces?
 Being able to specify package includes outside of a project root is especially
 useful when structuring code in a Monorepo, where projects can share components.
 
@@ -41,14 +52,14 @@ packages = [
 By explicitly setting a workspace root, it is possible to reference outside components like this:
 
 ``` shell
+# this will work, when using the build-project command
 packages = [
-    { include = "my/project/path/the_code_in_my_project"
-    { include = "shared/a-shared-package" }]
+    { include = "the_code_in_my_project"
+    { include = "../../../my-shared-package" }]
+
 ```
 
-The project specific code is referenced with a path starting from the workspace root. The external includes can now be
-referenced as if the project specific `pyproject.toml` were located at the root.
-
+Simplified example of a monorepo structure:
 
 ``` shell
 projects/
@@ -69,11 +80,8 @@ shared/
    __init__.py
    code.py
 
-.workspace (a file that tells the plugin where to find the workspace root)
+workspace.toml (a file that tells the plugin where to find the workspace root)
 ```
-
-As a fallback, the plugin will look for a `pyproject.toml` or a `.git` folder to determine the workspace root.
-
 
 ## Using the preview of Poetry
 This plugin depends on a preview of [Poetry](https://python-poetry.org/) with functionality for adding custom Plugins.
@@ -88,9 +96,10 @@ When installed, there will be a new command available: `build-project`.
 Setting the workspace root is done by altering the internal properties of the Poetry objects.
 This is (naturally) a risk, an update of the Poetry tool could break the functionality of the plugin.
 
-A long-term goal is to make a Pull Request to the Poetry repository, making this kind of functionality available
-in there. If (when?) that is done, this plugin would no longer be necessary.
+A long-term goal is to [make a Pull Request](https://github.com/python-poetry/poetry-core/pull/273) to the Poetry repository,
+making this kind of functionality available in there. This plugin would no longer be necessary if the pull request is accepted and merged.
 
 ## What's next? Any other commands?
 Starting with the `build-project` command, and ready to add more custom commands
 if any of the existing ones are relevant to override when using a project specific TOML file.
+

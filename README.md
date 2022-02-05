@@ -45,40 +45,41 @@ Something like this will cause the build to fail:
 # this will fail using the default poetry build command
 
 packages = [
-    { include = "the_code_in_my_project"
-    { include = "../../../my-shared-package" }]
+    { include = "my_namespace/my_package" from = "../../my_shared_folder" }
+]
 ```
 
 By explicitly setting a workspace root, it is possible to reference outside components like this:
 
 ``` shell
-# this will work, when using the build-project command
-packages = [
-    { include = "the_code_in_my_project"
-    { include = "../../../my-shared-package" }]
+# this will work, when using the build-project command.
 
+# Note the structure of the shared folder: namespace/package/*.py
+
+packages = [
+    { include = "my_namespace/my_package" from = "../../my_shared_folder" }
+]
 ```
 
 Simplified example of a monorepo structure:
 
 ``` shell
 projects/
-  my-app/
+  my_app/
     pyproject.toml (including a shared package)
-    app.py
 
-  my-service/
+  my_service/
     pyproject.toml (including other shared packages)
-    app.py
 
 shared/
-  my-package/
-   __init__.py
-   code.py
+  my_namespace/
+    my_package/
+      __init__.py
+      code.py
 
-  my-other-package/
-   __init__.py
-   code.py
+    my_other_package/
+      __init__.py
+      code.py
 
 workspace.toml (a file that tells the plugin where to find the workspace root)
 ```

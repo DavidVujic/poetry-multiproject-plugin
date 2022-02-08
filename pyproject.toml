@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "0.3.2"
+version = "0.3.3"
 description = "A Poetry plugin that aims to simplify package & dependency management for projects in Monorepos."
 authors = ["David Vujic"]
 homepage = "https://github.com/davidvujic/poetry-multiproject-plugin"
@@ -12,7 +12,7 @@ packages = [{include = "poetry_multiproject_plugin"}]
 poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.7"
 poetry = {version = "^1.2.0a2", allow-prereleases = true}
 
 [tool.poetry.dev-dependencies]

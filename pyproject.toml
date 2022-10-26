@@ -14,6 +14,15 @@ poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 [tool.poetry.dependencies]
 python = "^3.7"
 poetry = "^1.2"
+tomlkit = "^0.11.5"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+mypy = "^0.982"
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

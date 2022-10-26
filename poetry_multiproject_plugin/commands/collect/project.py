@@ -6,7 +6,9 @@ from cleo.helpers import option
 from poetry.console.commands.command import Command
 
 command_name = "collect-project"
-command_options = [option("toml", "t", "path to the TOML project file.", flag=False)]
+command_options = [
+    option("toml", "t", "path to the TOML project file.", flag=False)
+]
 
 
 class ProjectCollectCommand(Command):

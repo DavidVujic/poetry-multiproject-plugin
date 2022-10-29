@@ -2,11 +2,18 @@ import tomlkit
 from tomlkit.toml_document import TOMLDocument
 
 
+def extract_top_namespace(include: str) -> str:
+    parts = (part for part in include.split("/"))
+
+    return next(parts)
+
+
 def to_valid_dist_package(package: dict[str, str]) -> dict[str, str]:
     if ".." not in package.get("from", ""):
         return package
 
-    return {"include": package["include"]}
+    ns = extract_top_namespace(package["include"])
+    return {"include": ns}
 
 
 def to_valid_dist_packages(data: TOMLDocument) -> list[dict[str, str]]:
@@ -21,7 +28,6 @@ def generate_valid_dist_project_file(data: TOMLDocument) -> str:
     """
     original = tomlkit.dumps(data)
     copy = tomlkit.parse(original)
-
     dist_packages = to_valid_dist_packages(copy)
 
     copy["tool"]["poetry"]["packages"].clear()

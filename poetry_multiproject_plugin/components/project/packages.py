@@ -15,8 +15,10 @@ def copy_packages(project_file: Path):
     for p in package_paths:
         source = Path(project_file.parent / p["from"])
         to = Path(destination / p["to"])
+
         shutil.copytree(
             source,
             to,
             ignore=shutil.ignore_patterns("__pycache__", ".mypy_cache"),
+            dirs_exist_ok=True,
         )

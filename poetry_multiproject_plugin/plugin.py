@@ -11,11 +11,8 @@ class MultiProjectPlugin(ApplicationPlugin):
     The command will make it possible to use relative package includes.
     This feature is very useful for monorepos and using shared code.
 
-    Usage:
-    poetry build-project -t path/to/myproject.toml
-
-    Optionally, run the command from the same folder as the actual project specific TOML file:
-    poetry build-project
+    Usage
+    Navigate to the project folder and run: poetry build-project
     """
 
     def activate(self, application: Application):

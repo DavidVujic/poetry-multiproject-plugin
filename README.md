@@ -6,11 +6,7 @@ The command will make it possible to use relative package includes.
 This feature is very useful for monorepos and when sharing code between projects.
 
 ## Usage
-``` shell
-poetry build-project -t path/to/myproject.toml
-```
-
-Optionally, run the command from the same folder as the actual project specific TOML file:
+Navigate to the project folder (where the `pyproject.toml` file is).
 ``` shell
 poetry build-project
 ```

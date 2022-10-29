@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "0.3.3"
-description = "A Poetry plugin that aims to simplify package & dependency management for projects in Monorepos."
+version = "1.0.0"
+description = "A Poetry plugin that makes it possible to use relative package includes. Well suited for monorepos containing projects and shared code."
 authors = ["David Vujic"]
 homepage = "https://github.com/davidvujic/poetry-multiproject-plugin"
 repository = "https://github.com/davidvujic/poetry-multiproject-plugin"
@@ -13,11 +13,16 @@ poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-poetry = {version = "^1.2.0a2", allow-prereleases = true}
+poetry = "^1.2"
+tomlkit = "^0.11.5"
 
-[tool.poetry.dev-dependencies]
-cachecontrol = "0.12.10"
-cleo = "1.0.0a4"
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+mypy = "^0.982"
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

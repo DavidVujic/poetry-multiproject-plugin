@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from cleo.helpers import option
 from poetry.console.commands.build import BuildCommand
 from poetry.factory import Factory
 

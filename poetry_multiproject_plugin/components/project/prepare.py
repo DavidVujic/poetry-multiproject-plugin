@@ -32,6 +32,7 @@ def copy_project(project_file: Path) -> Path:
         source,
         destination,
         ignore=shutil.ignore_patterns("*.pyc", "__pycache__", ".venv", ".mypy_cache"),
+        dirs_exist_ok=True,
     )
 
     return Path(res)

@@ -28,6 +28,10 @@ def copy_project(project_file: Path) -> Path:
     source = project_file.parent.as_posix()
     destination = get_destination(project_file).as_posix()
 
-    res = shutil.copytree(source, destination)
+    res = shutil.copytree(
+        source,
+        destination,
+        ignore=shutil.ignore_patterns("*.pyc", "__pycache__", ".venv", ".mypy_cache"),
+    )
 
     return Path(res)

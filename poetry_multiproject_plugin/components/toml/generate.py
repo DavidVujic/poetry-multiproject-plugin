@@ -15,7 +15,7 @@ def to_valid_dist_packages(data: TOMLDocument) -> list[dict[str, str]]:
     return [to_valid_dist_package(p) for p in packages]
 
 
-def generate_valid_dist_project_file(data: TOMLDocument) -> bytes:
+def generate_valid_dist_project_file(data: TOMLDocument) -> str:
     """Returns a project file with any relative package includes rearranged,
     according to what is expected by the Poetry tool
     """
@@ -31,6 +31,4 @@ def generate_valid_dist_project_file(data: TOMLDocument) -> bytes:
 
     copy["tool"]["poetry"]["packages"].multiline(True)
 
-    content = tomlkit.dumps(copy) or ""
-
-    return content.encode()
+    return tomlkit.dumps(copy)

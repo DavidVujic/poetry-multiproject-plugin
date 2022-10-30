@@ -4,7 +4,7 @@ from tomlkit.toml_document import TOMLDocument
 
 
 def join_package_paths(package) -> Path:
-    from_path = package["from"]
+    from_path = package.get("from", "")
     include_path = package["include"]
 
     return Path(from_path).joinpath(include_path)

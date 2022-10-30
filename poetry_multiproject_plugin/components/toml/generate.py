@@ -8,18 +8,24 @@ def extract_top_namespace(include: str) -> str:
     return next(parts)
 
 
-def to_valid_dist_package(package: dict[str, str]) -> dict[str, str]:
-    if ".." not in package.get("from", ""):
-        return package
+def is_relative(package: dict[str, str]) -> bool:
+    return "from" in package and ".." in package.get("from", "")
 
-    ns = extract_top_namespace(package["include"])
-    return {"include": ns}
+
+def relative_to_local(packages) -> list[dict[str, str]]:
+    relative = [p for p in packages if is_relative(p)]
+    includes = {extract_top_namespace(p["include"]) for p in relative}
+
+    return [{"include": i} for i in includes]
 
 
 def to_valid_dist_packages(data: TOMLDocument) -> list[dict[str, str]]:
     packages = data["tool"]["poetry"]["packages"]
 
-    return [to_valid_dist_package(p) for p in packages]
+    local = [p for p in packages if not is_relative(p)]
+    modified = relative_to_local(packages)
+
+    return local + modified
 
 
 def generate_valid_dist_project_file(data: TOMLDocument) -> str:

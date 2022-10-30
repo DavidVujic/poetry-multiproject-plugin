@@ -12,7 +12,7 @@ packages = [{include = "poetry_multiproject_plugin"}]
 poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 poetry = "^1.2"
 tomlkit = "^0.11.5"
 
@@ -20,6 +20,7 @@ tomlkit = "^0.11.5"
 black = "^22.10.0"
 isort = "^5.10.1"
 mypy = "^0.982"
+flake8 = "^5.0.4"
 
 [tool.isort]
 profile = "black"

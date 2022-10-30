@@ -14,6 +14,21 @@ poetry build-project
 ## Installation
 This plugin can be installed according to the official [Poetry docs](https://python-poetry.org/docs/plugins/#using-plugins).
 
+``` shell
+poetry self add poetry-multiproject-plugin
+```
+
+## What does it do?
+
+the `poetry build-command` will:
+
+1. copy the actual project into a temporary folder.
+2. collect relative includes - such as `include = "foo/bar", from = "../../shared"` -  and copy them into the temprary folder.
+3. generate a new pyproject.toml.
+4. run the `poetry build` command in the temporary folder.
+5. copy the built `dist` folder (containing the wheel and sdist) into the actual project folder.
+6. remove the temporary folder.
+
 
 ## How is it different from the "poetry build" command?
 Poetry does not allow package includes outside of the __project__ root.
@@ -27,7 +42,9 @@ packages = [
 ]
 ```
 
-An example Monorepo structure:
+This plugin will allow relative package includes. You will now be able to share code between projects.
+
+An suggested Monorepo structure, with the shared code extracted into a separate folder structure:
 
 ``` shell
 projects/

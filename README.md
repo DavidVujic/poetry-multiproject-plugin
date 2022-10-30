@@ -2,6 +2,8 @@
 
 This is a Python `Poetry` plugin, adding the `build-project` command.
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/DavidVujic/poetry-multiproject-plugin/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/DavidVujic/poetry-multiproject-plugin/tree/main)
+
 The command will make it possible to use relative package includes.
 This feature is very useful for monorepos and when sharing code between projects.
 

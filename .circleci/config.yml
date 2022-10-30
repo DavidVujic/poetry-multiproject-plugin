@@ -1,0 +1,20 @@
+version: '2.1'
+orbs:
+  python: circleci/python@1.0.0
+
+jobs:
+  lint:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          command: |
+            poetry run flake8 ./poetry_multiproject_plugin
+          name: Linting
+
+workflows:
+  main:
+    jobs:
+      - lint

@@ -1,4 +1,3 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
 version: '2.1'
 orbs:
   python: circleci/python@1.0.0

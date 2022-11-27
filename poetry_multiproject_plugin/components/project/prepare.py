@@ -1,11 +1,12 @@
 import shutil
 from pathlib import Path
+from typing import cast
 
 from poetry_multiproject_plugin.components.toml import read
 
 
 def get_project_name(project_file: Path) -> str:
-    content = read.toml(project_file)
+    content = cast(dict, read.toml(project_file))
 
     return content["tool"]["poetry"]["name"]
 

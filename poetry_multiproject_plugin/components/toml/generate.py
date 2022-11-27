@@ -1,6 +1,7 @@
+from typing import Dict, List, cast
+
 import tomlkit
 from tomlkit.toml_document import TOMLDocument
-from typing import Dict, List
 
 
 def extract_top_namespace(include: str) -> str:
@@ -20,7 +21,7 @@ def relative_to_local(packages) -> List[Dict[str, str]]:
     return [{"include": i} for i in includes]
 
 
-def to_valid_dist_packages(data: TOMLDocument) -> List[Dict[str, str]]:
+def to_valid_dist_packages(data: dict) -> List[Dict[str, str]]:
     packages = data["tool"]["poetry"]["packages"]
 
     local = [p for p in packages if not is_relative(p)]
@@ -34,7 +35,7 @@ def generate_valid_dist_project_file(data: TOMLDocument) -> str:
     according to what is expected by the Poetry tool
     """
     original = tomlkit.dumps(data)
-    copy = tomlkit.parse(original)
+    copy = cast(dict, tomlkit.parse(original))
     dist_packages = to_valid_dist_packages(copy)
 
     copy["tool"]["poetry"]["packages"].clear()

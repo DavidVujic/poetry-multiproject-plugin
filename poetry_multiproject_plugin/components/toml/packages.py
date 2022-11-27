@@ -1,7 +1,7 @@
 from pathlib import Path
+from typing import List, cast
 
 from tomlkit.toml_document import TOMLDocument
-from typing import List
 
 
 def join_package_paths(package) -> Path:
@@ -16,6 +16,7 @@ def create_path_data(package) -> dict:
 
 
 def packages_to_paths(toml: TOMLDocument) -> List[dict]:
-    packages = toml["tool"]["poetry"]["packages"]
+    data = cast(dict, toml)
+    packages = data["tool"]["poetry"]["packages"]
 
     return [create_path_data(package) for package in packages]

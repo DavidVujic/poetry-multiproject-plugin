@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 
 from cleo.helpers import option
 from cleo.io.outputs.output import Verbosity
@@ -16,7 +17,7 @@ from poetry_multiproject_plugin.components.project import (
 command_name = "check-project"
 
 
-def run_check(destination: Path, config_file: str) -> list[str]:
+def run_check(destination: Path, config_file: str) -> List[str]:
     rows = check_for_errors(destination, config_file)
     dest = str(destination)
 

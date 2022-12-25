@@ -8,7 +8,7 @@ The `build-project` command will make it possible to use relative package includ
 This feature is very useful for monorepos and when sharing code between projects.
 
 
-The `check-project` command is useful to check that dependencies are added properly in indivitual projects.
+The `check-project` command is useful to check that dependencies are added properly in a project.
 It uses the `MyPy` tool under the hood, and will output any errors from the static type checker.
 
 
@@ -20,7 +20,7 @@ Build a project:
 poetry build-project
 ```
 
-Check the code used in an individual project:
+Check the code used in a project:
 
 ``` shell
 poetry check-project

@@ -1,16 +1,35 @@
 # Poetry Multiproject Plugin
 
-This is a Python `Poetry` plugin, adding the `build-project` command.
+This is a Python `Poetry` plugin, adding the `build-project` and `check-project` commands.
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/DavidVujic/poetry-multiproject-plugin/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/DavidVujic/poetry-multiproject-plugin/tree/main)
 
-The command will make it possible to use relative package includes.
+The `build-project` command will make it possible to use relative package includes.
 This feature is very useful for monorepos and when sharing code between projects.
+
+
+The `check-project` command is useful to check that dependencies are added properly in indivitual projects.
+It uses the `MyPy` tool under the hood, and will output any errors from the static type checker.
+
 
 ## Usage
 Navigate to the project folder (where the `pyproject.toml` file is).
+
+Build a project:
 ``` shell
 poetry build-project
+```
+
+Check the code used in an individual project:
+
+``` shell
+poetry check-project
+```
+
+Check the code, with a custom `MyPy` configuration to override the defaults:
+
+``` shell
+poetry check-project --config-file <PATH-TO-MYPY.INI-CONFIG-FILE>
 ```
 
 ## Installation

@@ -18,15 +18,15 @@ class ProjectBuildCommand(BuildCommand):
     name = command_name
 
     def collect_project(self, path: Path) -> Path:
-        destination = prepare.get_destination(path)
+        destination = prepare.get_destination(path, "prepare")
 
-        prepare.copy_project(path)
-        packages.copy_packages(path)
+        prepare.copy_project(path, destination)
+        packages.copy_packages(path, destination)
         self.line(
             f"Copied project & packages into temporary folder <c1>{destination}</c1>"
         )
 
-        generated = create.create_new_project_file(path)
+        generated = create.create_new_project_file(path, destination)
         self.line(f"Generated <c1>{generated}</c1>")
 
         return destination
@@ -46,9 +46,9 @@ class ProjectBuildCommand(BuildCommand):
 
         super(ProjectBuildCommand, self).handle()
 
-        dist.copy_dist(path)
+        dist.copy_dist(path, project_path)
         self.line("Copied <c1>dist</c1> folder.")
 
-        cleanup.remove_project(path)
+        cleanup.remove_project(project_path)
         self.line("Removed temporary folder.")
         self.line("<c1>Done!</c1>")

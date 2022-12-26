@@ -36,12 +36,12 @@ class ProjectCheckCommand(BuildCommand):
     ]
 
     def collect_project(self, path: Path) -> Path:
-        destination = prepare.get_destination(path)
+        destination = prepare.get_destination(path, "check")
 
-        prepare.copy_project(path)
-        packages.copy_packages(path)
+        prepare.copy_project(path, destination)
+        packages.copy_packages(path, destination)
 
-        create.create_new_project_file(path)
+        create.create_new_project_file(path, destination)
 
         return destination
 
@@ -66,4 +66,4 @@ class ProjectCheckCommand(BuildCommand):
         for r in res:
             self.line(r)
 
-        cleanup.remove_project(path)
+        cleanup.remove_project(project_path)

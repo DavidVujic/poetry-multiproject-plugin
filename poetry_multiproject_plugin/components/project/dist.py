@@ -1,12 +1,8 @@
 import shutil
 from pathlib import Path
 
-from poetry_multiproject_plugin.components.project import prepare
 
-
-def copy_dist(project_file: Path) -> Path:
-    copy_path = prepare.get_destination(project_file)
-
+def copy_dist(project_file: Path, copy_path: Path) -> Path:
     source = Path(copy_path / "dist").as_posix()
     destination = Path(project_file.parent / "dist").as_posix()
 

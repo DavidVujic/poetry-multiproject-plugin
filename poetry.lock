@@ -363,7 +363,7 @@ python-versions = "*"
 name = "mypy"
 version = "0.991"
 description = "Optional static typing for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -382,7 +382,7 @@ reports = ["lxml"]
 name = "mypy-extensions"
 version = "0.4.3"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -646,7 +646,7 @@ python-versions = "*"
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -731,7 +731,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a6fcd0350e31365a9132ce3e286677f2139dd38bde2c1ea97fe2ad78838db02b"
+content-hash = "8251e7aaf5fee969293128781430e006887b050a978e6309d69af111846b3bfa"
 
 [metadata.files]
 attrs = [

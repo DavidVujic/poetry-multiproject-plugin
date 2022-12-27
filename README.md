@@ -41,13 +41,23 @@ poetry self add poetry-multiproject-plugin
 
 ## What does it do?
 
-the `poetry build-command` will:
+the `poetry build-project` command will:
 
 1. copy the actual project into a temporary folder.
 2. collect relative includes - such as `include = "foo/bar", from = "../../shared"` -  and copy them into the temprary folder.
 3. generate a new pyproject.toml.
 4. run the `poetry build` command in the temporary folder.
 5. copy the built `dist` folder (containing the wheel and sdist) into the actual project folder.
+6. remove the temporary folder.
+
+
+the `poetry check-project` command will:
+
+1. copy the actual project into a temporary folder.
+2. collect relative includes - such as `include = "foo/bar", from = "../../shared"` -  and copy them into the temprary folder.
+3. generate a new pyproject.toml.
+4. run `poetry install` in the temporary folder.
+5. run `poetry run mypy` in the temporary folder.
 6. remove the temporary folder.
 
 

@@ -8,4 +8,7 @@ def remove_project(project_path: Path):
 
 
 def remove_file(project_path: Path, file_name: str):
-    os.remove(project_path / file_name)
+    try:
+        os.remove(project_path / file_name)
+    except FileNotFoundError:
+        pass

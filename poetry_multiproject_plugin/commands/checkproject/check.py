@@ -4,7 +4,7 @@ from typing import List
 
 from cleo.helpers import option
 from cleo.io.outputs.output import Verbosity
-from poetry.console.commands.build import BuildCommand
+from poetry.console.commands.command import Command
 from poetry.factory import Factory
 
 from poetry_multiproject_plugin.components.check import check_for_errors
@@ -31,7 +31,7 @@ def run_check(destination: Path, pyproj: str, config_file: str) -> List[str]:
     return [row.replace(dest, "") for row in flattened]
 
 
-class ProjectCheckCommand(BuildCommand):
+class ProjectCheckCommand(Command):
     name = command_name
 
     options = [
@@ -65,14 +65,13 @@ class ProjectCheckCommand(BuildCommand):
         self.prepare_for_build(project_path.absolute())
 
         self.io.set_verbosity(Verbosity.QUIET)
-        super(ProjectCheckCommand, self).handle()
-
-        mypy_config = self.option("config-file")
 
         cleanup.remove_file(project_path, "poetry.lock")
+        cleanup.remove_file(project_path, "poetry.toml")
 
         install_deps(project_path)
 
+        mypy_config = self.option("config-file")
         res = run_check(project_path, pyproj, mypy_config)
 
         self.io.set_verbosity(Verbosity.NORMAL)

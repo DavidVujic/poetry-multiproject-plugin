@@ -61,6 +61,13 @@ the `poetry check-project` command will:
 6. remove the temporary folder.
 
 
+The default settings for the underlying `MyPy` configuration are:
+
+``` shell
+--explicit-package-bases --namespace-packages --no-error-summary --no-color-output
+```
+
+
 ## How is it different from the "poetry build" command?
 Poetry does not allow package includes outside of the __project__ root.
 

@@ -61,7 +61,7 @@ the `poetry check-project` command will:
 6. remove the temporary folder.
 
 
-The default settings for the underlying `MyPy` configuration are:
+The default setting for the underlying `MyPy` configuration is:
 
 ``` shell
 --explicit-package-bases --namespace-packages --no-error-summary --no-color-output

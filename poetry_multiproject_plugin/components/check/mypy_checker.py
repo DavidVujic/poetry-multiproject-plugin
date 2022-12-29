@@ -11,9 +11,7 @@ default_args = [
 ]
 
 
-def run(dest: str, top_ns: str, config_file: Union[str, None]) -> List[str]:
-    os.environ["MYPYPATH"] = dest
-
+def run(dest: Path, top_ns: str, config_file: Union[str, None]) -> List[str]:
     args = ["--config-file", config_file] if config_file else default_args
     cmd = ["poetry", "run", "mypy"] + args + [f"{dest}/{top_ns}"]
 
@@ -22,9 +20,19 @@ def run(dest: str, top_ns: str, config_file: Union[str, None]) -> List[str]:
     return res.stdout.splitlines()
 
 
+def navigate_to(path: Path):
+    os.chdir(str(path))
+
+
 def check_for_errors(
     destination: Path, top_ns: str, config_file: Union[str, None]
 ) -> List[str]:
-    lines = run(str(destination), top_ns, config_file)
+    current_dir = Path.cwd()
+
+    navigate_to(destination)
+
+    lines = run(destination, top_ns, config_file)
+
+    navigate_to(current_dir)
 
     return [line for line in lines if "error:" in line]

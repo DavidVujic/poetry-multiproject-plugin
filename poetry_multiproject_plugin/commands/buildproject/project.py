@@ -37,7 +37,7 @@ class ProjectBuildCommand(BuildCommand):
         self.set_poetry(project_poetry)
 
     def handle(self):
-        path = Path("pyproject.toml").absolute()
+        path = self.poetry.file.path.absolute()
 
         self.line(f"Using <c1>{path}</c1>")
 

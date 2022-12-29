@@ -58,23 +58,26 @@ class ProjectCheckCommand(Command):
         self.set_poetry(project_poetry)
 
     def handle(self):
-        pyproj = "pyproject.toml"
-        path = Path(pyproj).absolute()
+        is_verbose = self.option("verbose")
+        path = self.poetry.file.path.absolute()
 
         project_path = self.collect_project(path)
         self.prepare_for_build(project_path.absolute())
 
-        self.io.set_verbosity(Verbosity.QUIET)
+        if not is_verbose:
+            self.io.set_verbosity(Verbosity.QUIET)
 
         cleanup.remove_file(project_path, "poetry.lock")
         cleanup.remove_file(project_path, "poetry.toml")
 
-        install_deps(project_path)
+        install_deps(project_path, is_verbose)
 
         mypy_config = self.option("config-file")
-        res = run_check(project_path, pyproj, mypy_config)
+        res = run_check(project_path, "pyproject.toml", mypy_config)
 
-        self.io.set_verbosity(Verbosity.NORMAL)
+        if not is_verbose:
+            self.io.set_verbosity(Verbosity.NORMAL)
+
         for r in res:
             self.line(r)
 

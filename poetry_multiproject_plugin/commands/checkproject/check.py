@@ -20,10 +20,15 @@ from poetry_multiproject_plugin.components.toml import read
 command_name = "check-project"
 
 
-def run_check(destination: Path, pyproj: str, config_file: str) -> List[str]:
+def run_check(
+    destination: Path, pyproj: str, is_verbose: bool, config_file: str
+) -> List[str]:
     paths = read.package_paths(destination / pyproj)
 
-    rows = [check_for_errors(destination, str(path), config_file) for path in paths]
+    rows = [
+        check_for_errors(destination, str(path), is_verbose, config_file)
+        for path in paths
+    ]
     flattened = itertools.chain.from_iterable(rows)
 
     dest = str(destination)
@@ -73,7 +78,7 @@ class ProjectCheckCommand(Command):
         install_deps(project_path, is_verbose)
 
         mypy_config = self.option("config-file")
-        res = run_check(project_path, "pyproject.toml", mypy_config)
+        res = run_check(project_path, "pyproject.toml", is_verbose, mypy_config)
 
         if not is_verbose:
             self.io.set_verbosity(Verbosity.NORMAL)

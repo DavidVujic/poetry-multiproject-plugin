@@ -29,7 +29,7 @@ def copy_project(project_file: Path, destination: Path) -> Path:
     res = shutil.copytree(
         source,
         destination,
-        ignore=shutil.ignore_patterns("*.pyc", "__pycache__", ".venv", ".mypy_cache"),
+        ignore=shutil.ignore_patterns("*.pyc", "__pycache__", ".venv", ".mypy_cache", "node_modules"),
         dirs_exist_ok=True,
     )
 

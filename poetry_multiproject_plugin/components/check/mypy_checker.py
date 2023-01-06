@@ -11,6 +11,12 @@ default_args = [
 ]
 
 
+def install(is_verbose: bool):
+    args = [] if is_verbose else ["--quiet"]
+    cmd = ["poetry", "add", "mypy"] + args
+    subprocess.run(cmd)
+
+
 def run(dest: Path, top_ns: str, config_file: Union[str, None]) -> List[str]:
     args = ["--config-file", config_file] if config_file else default_args
     cmd = ["poetry", "run", "mypy"] + args + [f"{dest}/{top_ns}"]
@@ -25,12 +31,13 @@ def navigate_to(path: Path):
 
 
 def check_for_errors(
-    destination: Path, top_ns: str, config_file: Union[str, None]
+    destination: Path, top_ns: str, is_verbose: bool, config_file: Union[str, None]
 ) -> List[str]:
     current_dir = Path.cwd()
 
     navigate_to(destination)
 
+    install(is_verbose)
     lines = run(destination, top_ns, config_file)
 
     navigate_to(current_dir)

@@ -10,7 +10,7 @@ def ensure_reusable_venv():
 
 def run_install_command(is_verbose):
     quiet = [] if is_verbose else ["--quiet"]
-    subprocess.run(["poetry", "install", "--only", "main"] + quiet)
+    subprocess.run(["poetry", "install", "--only", "main", "--no-root"] + quiet)
 
 
 def navigate_to(path: Path):

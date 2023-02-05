@@ -1,14 +1,7 @@
 import shutil
 from pathlib import Path
-from typing import cast
 
 from poetry_multiproject_plugin.components.toml import read
-
-
-def get_project_name(project_file: Path) -> str:
-    content = cast(dict, read.toml(project_file))
-
-    return content["tool"]["poetry"]["name"]
 
 
 def get_destination(project_file: Path, prefix: str) -> Path:
@@ -17,7 +10,7 @@ def get_destination(project_file: Path, prefix: str) -> Path:
     if project_file.parent == grandparent:
         raise ValueError(f"Failed to navigate to the parent of {project_file.parent}")
 
-    project_name = get_project_name(project_file)
+    project_name = read.project_name(project_file)
     sibling = f".{prefix}_{project_name}"
 
     return Path(grandparent / sibling)
@@ -29,7 +22,9 @@ def copy_project(project_file: Path, destination: Path) -> Path:
     res = shutil.copytree(
         source,
         destination,
-        ignore=shutil.ignore_patterns("*.pyc", "__pycache__", ".venv", ".mypy_cache", "node_modules"),
+        ignore=shutil.ignore_patterns(
+            "*.pyc", "__pycache__", ".venv", ".mypy_cache", "node_modules"
+        ),
         dirs_exist_ok=True,
     )
 

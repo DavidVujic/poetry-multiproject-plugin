@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import List
 
@@ -31,4 +32,4 @@ def project_name(path: Path) -> str:
 def normalized_project_name(path: Path) -> str:
     name = project_name(path)
 
-    return name.replace("-", "_")
+    return re.sub("[^a-zA-Z]", "", name)

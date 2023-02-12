@@ -44,7 +44,7 @@ def mutate_imports(node: ast.AST, namespaces: List[str], top_ns: str) -> bool:
     return False
 
 
-def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> None:
+def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> bool:
     file_path = path.as_posix()
 
     with open(file_path, "r") as f:
@@ -57,3 +57,7 @@ def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> No
 
         with open(file_path, "w") as f:
             f.write(rewritten_source_code)
+
+        return True
+
+    return False

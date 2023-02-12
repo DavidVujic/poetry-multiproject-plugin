@@ -1,5 +1,7 @@
+import re
 import shutil
 from pathlib import Path
+from typing import Union
 
 from poetry_multiproject_plugin.components.toml import read
 
@@ -29,3 +31,7 @@ def copy_project(project_file: Path, destination: Path) -> Path:
     )
 
     return Path(res)
+
+
+def normalize_top_namespace(namespace: Union[str, None]) -> Union[str, None]:
+    return re.sub("[^a-zA-Z_]", "", namespace) if namespace else None

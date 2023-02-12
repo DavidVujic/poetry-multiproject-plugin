@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 from typing import List
 
@@ -27,9 +26,3 @@ def project_name(path: Path) -> str:
     data: dict = toml(path)
 
     return data["tool"]["poetry"]["name"]
-
-
-def normalized_project_name(path: Path) -> str:
-    name = project_name(path)
-
-    return re.sub("[^a-zA-Z_]", "", name)

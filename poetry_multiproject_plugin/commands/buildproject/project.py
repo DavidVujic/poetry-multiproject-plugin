@@ -1,9 +1,11 @@
 from pathlib import Path
 from typing import Union
 
+from cleo.helpers import option
 from poetry.console.commands.build import BuildCommand
 from poetry.factory import Factory
 
+from poetry_multiproject_plugin.components import parsing
 from poetry_multiproject_plugin.components.project import (
     cleanup,
     create,
@@ -19,6 +21,14 @@ command_name = "build-project"
 class ProjectBuildCommand(BuildCommand):
     name = command_name
 
+    options = [
+        option(
+            long_name="with-top-ns",
+            description="A top namespace for a package that will be used to arrange sub-packages and to inject as top namespace in source code.",
+            flag=False,
+        )
+    ]
+
     def collect_project(self, path: Path, top_ns: Union[str, None]) -> Path:
         destination = prepare.get_destination(path, "prepare")
 
@@ -33,6 +43,20 @@ class ProjectBuildCommand(BuildCommand):
 
         return destination
 
+    def rewrite_modules(self, project_path: Path, top_ns: str) -> None:
+        folder = project_path / top_ns
+
+        namespaces = [item.name for item in folder.iterdir() if item.is_dir()]
+
+        modules = folder.glob("**/*.py")
+
+        for module in modules:
+            was_rewritten = parsing.rewrite_module(module, namespaces, top_ns)
+            if was_rewritten:
+                self.line(
+                    f"Updated <c1>{module.parent.name}/{module.name}</c1> with new top namespace for the local package imports."
+                )
+
     def prepare_for_build(self, path: Path):
         project_poetry = Factory().create_poetry(path)
 
@@ -43,11 +67,13 @@ class ProjectBuildCommand(BuildCommand):
 
         self.line(f"Using <c1>{path}</c1>")
 
-        project_name = read.normalized_project_name(path)
+        top_ns = prepare.normalize_top_namespace(self.option("with-top-ns"))
+        project_path = self.collect_project(path, top_ns)
 
-        self.line(f"Normalized project name is {project_name}")
+        if top_ns:
+            self.line(f"Using normalized top namespace: {top_ns}")
+            self.rewrite_modules(project_path, top_ns)
 
-        project_path = self.collect_project(path, project_name)
         self.prepare_for_build(project_path.absolute())
 
         super(ProjectBuildCommand, self).handle()

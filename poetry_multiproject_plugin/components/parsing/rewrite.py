@@ -53,7 +53,7 @@ def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> No
     res = {mutate_imports(node, namespaces, top_ns) for node in ast.walk(tree)}
 
     if True in res:
-        rewritten_source_code = ast.unparse(tree)
+        rewritten_source_code = ast.unparse(tree)  # type: ignore[attr-defined]
 
         with open(file_path, "w") as f:
             f.write(rewritten_source_code)

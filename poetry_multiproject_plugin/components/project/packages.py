@@ -14,7 +14,7 @@ def copy_packages(project_file: Path, destination: Path, top_ns: Union[str, None
         source = Path(project_file.parent / p["from"])
 
         top_ns_path = f"{top_ns}/" if top_ns else ""
-        to = Path(destination / top_ns_path + p["to"])
+        to = Path(destination / top_ns_path / p["to"])
 
         shutil.copytree(
             source,

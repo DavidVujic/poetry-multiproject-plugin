@@ -32,4 +32,4 @@ def project_name(path: Path) -> str:
 def normalized_project_name(path: Path) -> str:
     name = project_name(path)
 
-    return re.sub("[^a-zA-Z]", "", name)
+    return re.sub("[^a-zA-Z_]", "", name)

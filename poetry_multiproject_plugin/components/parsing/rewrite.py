@@ -1,6 +1,6 @@
 import ast
 import pathlib
-from typing import List, Set
+from typing import List
 
 
 def create_namespace_path(top_ns: str, current: str) -> str:

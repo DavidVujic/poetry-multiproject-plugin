@@ -31,9 +31,13 @@ def to_valid_dist_packages(
     packages = data["tool"]["poetry"]["packages"]
 
     local = [p for p in packages if not is_relative(p)]
-    modified = [to_include(top_ns)] if top_ns else relative_to_local(packages)
 
-    return local + modified
+    relative_packages = relative_to_local(packages)
+
+    if top_ns and relative_packages:
+        return local + [to_include(top_ns)]
+
+    return local + relative_packages
 
 
 def generate_valid_dist_project_file(

@@ -13,7 +13,6 @@ from poetry_multiproject_plugin.components.project import (
     packages,
     prepare,
 )
-from poetry_multiproject_plugin.components.toml import read
 
 command_name = "build-project"
 
@@ -23,8 +22,8 @@ class ProjectBuildCommand(BuildCommand):
 
     options = [
         option(
-            long_name="with-top-ns",
-            description="A top namespace for a package that will be used to arrange sub-packages and to inject as top namespace in source code.",
+            long_name="with-top-namespace",
+            description="To arrange relative includes, and to modify import statements.",
             flag=False,
         )
     ]
@@ -46,6 +45,10 @@ class ProjectBuildCommand(BuildCommand):
     def rewrite_modules(self, project_path: Path, top_ns: str) -> None:
         folder = project_path / top_ns
 
+        if not folder.exists():
+            return
+
+        self.line(f"Using normalized top namespace: {top_ns}")
         namespaces = [item.name for item in folder.iterdir() if item.is_dir()]
 
         modules = folder.glob("**/*.py")
@@ -54,7 +57,7 @@ class ProjectBuildCommand(BuildCommand):
             was_rewritten = parsing.rewrite_module(module, namespaces, top_ns)
             if was_rewritten:
                 self.line(
-                    f"Updated <c1>{module.parent.name}/{module.name}</c1> with new top namespace for the local package imports."
+                    f"Updated <c1>{module.parent.name}/{module.name}</c1> with new top namespace for local imports."
                 )
 
     def prepare_for_build(self, path: Path):
@@ -71,7 +74,6 @@ class ProjectBuildCommand(BuildCommand):
         project_path = self.collect_project(path, top_ns)
 
         if top_ns:
-            self.line(f"Using normalized top namespace: {top_ns}")
             self.rewrite_modules(project_path, top_ns)
 
         self.prepare_for_build(project_path.absolute())

@@ -19,7 +19,7 @@ The `build-project` command will collect the project-specific packages and build
 
 ### Libraries?
 Building libraries is also supported, but you will need to consider that the code will likely share the same top namespace with other libraries 
-built from the same monorepo. It depends on your monorepo structure. This will likely be a problem when libraries are installed into the same virtual environment.
+built from the same monorepo. It depends on your monorepo structure. This will likely be a problem when more than one of your libraries are installed into the same virtual environment.
 
 Since Python libraries by default are installed in a "flat" folder structure, two libraries with the same top namespace will collide.
 

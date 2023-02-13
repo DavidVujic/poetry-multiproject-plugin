@@ -18,12 +18,12 @@ The main use case is to support having one or more microservices or apps in a Mo
 The `build-project` command will collect the project-specific packages and build an installable artifact from it (i.e. a wheel or an sdist).
 
 ### Libraries?
-Building libraries is also supported, but you will need to consider that, for several libraries, the code will likely share the same top namespace (depending on your monorepo structure).
-This can be a problem when libraries - that originates from projects built from the same monorepo - will be installed into the same virtual environment.
+Building libraries is also supported, but you will need to consider that the code will likely share the same top namespace with other libraries 
+built from the same monorepo. It depends on your monorepo structure. This will likely be a problem when libraries are installed into the same virtual environment.
 
-Since Python libraries are installed in a "flat" folder structure, two libraries with the same top namespace will collide.
+Since Python libraries by default are installed in a "flat" folder structure, two libraries with the same top namespace will collide.
 
-There is a way to solve this, by using the `--with-top-namespace` flag of the `build-project` command. See [usage for libraries](#usage-for-libraries).
+There is a way to solve this issue, by using the `--with-top-namespace` flag of the `build-project` command. See [usage for libraries](#usage-for-libraries).
 
 ## Usage
 Navigate to the project folder (where the `pyproject.toml` file is).

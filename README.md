@@ -7,10 +7,23 @@ This is a Python `Poetry` plugin, adding the `build-project` and `check-project`
 The `build-project` command will make it possible to use relative package includes.
 This feature is very useful for monorepos and when sharing code between projects.
 
-
 The `check-project` command is useful to check that dependencies are added properly in a project.
 It uses the `MyPy` tool under the hood, and will output any errors from the static type checker.
 
+
+## Use cases
+
+### Microservices and apps
+The main use case is to support having one or more microservices or apps in a Monorepo, and share code between the services with namespaced packages.
+The `build-project` command will collect the project-specific packages and build an installable artifact from it (i.e. a wheel or an sdist).
+
+### Libraries?
+Building libraries is also supported, but you will need to consider that, for several libraries, the code will likely share the same top namespace (depending on your monorepo structure).
+This can be a problem when libraries - that originates from projects built from the same monorepo - will be installed into the same virtual environment.
+
+Since Python libraries are installed in a "flat" folder structure, two libraries with the same top namespace will collide.
+
+There is a way to solve this, by using the `--with-top-namespace` flag of the `build-project` command. See [usage for libraries](#usage-for-libraries).
 
 ## Usage
 Navigate to the project folder (where the `pyproject.toml` file is).
@@ -31,6 +44,48 @@ Check the code, with a custom `MyPy` configuration to override the defaults:
 ``` shell
 poetry check-project --config-file <PATH-TO-MYPY.INI-CONFIG-FILE>
 ```
+
+### Usage for libraries
+The `build-project` has a solution to the problem with top namespaces in libraries.
+You can choose a custom namespace to be used in the build process, by using the `--with-top-namespace` flag. 
+
+The command will organize the namespaced packages according to the custom top namespace, and more importantly, re-write the imports made in the actual source code.
+The re-organizing and re-writing is performed on the relative includes.
+
+The `build-project` command, with a custom top namespace:
+```shell
+poetry build-project --with-top-namespace my_namespace
+```
+
+#### The build output
+
+Default behaviour of `build-project` (i.e. without any custom top namespace flag):
+```shell
+/my_package
+   __init__.py
+   my_module.py
+```
+
+By using the `--with-top-namespace` flag, the built artifact will look something like this:
+```shell
+my_namespace/
+    /my_package
+       __init__.py
+       my_module.py
+```
+
+And will re-write the relevant module(s):
+
+(before)
+```python
+from my_package import my_function
+```
+
+(after)
+```python
+from my_namespace.my_package import my_function
+```
+
 
 ## Installation
 This plugin can be installed according to the official [Poetry docs](https://python-poetry.org/docs/plugins/#using-plugins).

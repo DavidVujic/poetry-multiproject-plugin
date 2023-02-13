@@ -46,7 +46,7 @@ poetry check-project --config-file <PATH-TO-MYPY.INI-CONFIG-FILE>
 ```
 
 ### Usage for libraries
-The `build-project` has a solution to the problem with top namespaces in libraries.
+The `build-project` has a solution to the problem with top namespaces in libraries for __Python 3.9__ and more.
 You can choose a custom namespace to be used in the build process, by using the `--with-top-namespace` flag. 
 
 The command will organize the namespaced packages according to the custom top namespace, and more importantly, re-write the imports made in the actual source code.
@@ -86,6 +86,9 @@ from my_package import my_function
 from my_namespace.my_package import my_function
 ```
 
+##### How is this done?
+The code in this repo uses AST (Abstract Syntax Tree) parsing to modify source code.
+The Python built-in `ast` module is used to parse and un-parse Python code.
 
 ## Installation
 This plugin can be installed according to the official [Poetry docs](https://python-poetry.org/docs/plugins/#using-plugins).

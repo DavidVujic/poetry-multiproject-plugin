@@ -20,3 +20,9 @@ def package_paths(path: Path) -> List[Path]:
     packages = data["tool"]["poetry"]["packages"]
 
     return [join_package_paths(p) for p in packages]
+
+
+def project_name(path: Path) -> str:
+    data: dict = toml(path)
+
+    return data["tool"]["poetry"]["name"]

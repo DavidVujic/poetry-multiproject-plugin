@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 from cleo.helpers import option
+from cleo.io.inputs.option import Option
 from poetry.console.commands.build import BuildCommand
 from poetry.factory import Factory
 
@@ -17,7 +18,7 @@ from poetry_multiproject_plugin.components.project import (
 command_name = "build-project"
 
 
-def create_command_options():
+def create_command_options() -> List[Option]:
     parent = BuildCommand.options or []
 
     current = [

@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 from cleo.helpers import option
+from cleo.io.inputs.option import Option
 from poetry.console.commands.build import BuildCommand
 from poetry.factory import Factory
 
@@ -17,16 +18,24 @@ from poetry_multiproject_plugin.components.project import (
 command_name = "build-project"
 
 
-class ProjectBuildCommand(BuildCommand):
-    name = command_name
+def create_command_options() -> List[Option]:
+    parent = BuildCommand.options or []
 
-    options = [
+    current = [
         option(
             long_name="with-top-namespace",
             description="To arrange relative includes, and to modify import statements.",
             flag=False,
         )
     ]
+
+    return parent + current
+
+
+class ProjectBuildCommand(BuildCommand):
+    name = command_name
+
+    options = create_command_options()
 
     def collect_project(self, path: Path, top_ns: Union[str, None]) -> Path:
         destination = prepare.get_destination(path, "prepare")
@@ -70,7 +79,7 @@ class ProjectBuildCommand(BuildCommand):
 
         self.line(f"Using <c1>{path}</c1>")
 
-        top_ns = prepare.normalize_top_namespace(self.option("with-top-ns"))
+        top_ns = prepare.normalize_top_namespace(self.option("with-top-namespace"))
         project_path = self.collect_project(path, top_ns)
 
         if top_ns:

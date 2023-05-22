@@ -12,7 +12,7 @@ def create_new_project_file(
 
     destination = Path(destination / project_file.name)
 
-    with open(destination.as_posix(), "w") as f:
+    with open(destination.as_posix(), "w", encoding="utf-8") as f:
         f.write(generated)
 
     return destination

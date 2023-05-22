@@ -47,7 +47,7 @@ def mutate_imports(node: ast.AST, namespaces: List[str], top_ns: str) -> bool:
 def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> bool:
     file_path = path.as_posix()
 
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         tree = ast.parse(f.read(), path.name)
 
     res = {mutate_imports(node, namespaces, top_ns) for node in ast.walk(tree)}
@@ -55,7 +55,7 @@ def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> bo
     if True in res:
         rewritten_source_code = ast.unparse(tree)  # type: ignore[attr-defined]
 
-        with open(file_path, "w") as f:
+        with open(file_path, "w", encoding="utf-8") as f:
             f.write(rewritten_source_code)
 
         return True

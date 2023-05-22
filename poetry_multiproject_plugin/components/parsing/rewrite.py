@@ -55,7 +55,7 @@ def rewrite_module(path: pathlib.Path, namespaces: List[str], top_ns: str) -> bo
     if True in res:
         rewritten_source_code = ast.unparse(tree)  # type: ignore[attr-defined]
 
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
             f.write(rewritten_source_code)
 
         return True

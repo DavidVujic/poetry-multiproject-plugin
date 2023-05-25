@@ -57,6 +57,15 @@ The `build-project` command, with a custom top namespace:
 poetry build-project --with-top-namespace my_namespace
 ```
 
+#### Namespace with slashes
+The `--with-top-namespace` argument can also be used with a forward slash `/` and this will create a path with the slash
+as well as the module/import will the accessible with the new slash.
+
+Example with `--with-top-namespace foo/bar`:
+```python
+from foo.bar import baz
+```
+
 #### The build output
 
 Default behaviour of `build-project` (i.e. without any custom top namespace flag):

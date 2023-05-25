@@ -57,25 +57,16 @@ The `build-project` command, with a custom top namespace:
 poetry build-project --with-top-namespace my_namespace
 ```
 
-#### Namespace with slashes
-The `--with-top-namespace` argument can also be used with a forward slash `/` and this will create a path with the slash
-as well as the module/import will the accessible with the new slash.
-
-Example with `--with-top-namespace foo/bar`:
-```python
-from foo.bar import baz
-```
-
 #### The build output
 
-Default behaviour of `build-project` (i.e. without any custom top namespace flag):
+###### Default(no flag)
 ```shell
 /my_package
    __init__.py
    my_module.py
 ```
 
-By using the `--with-top-namespace` flag, the built artifact will look something like this:
+###### Namespace(`--with-top-namespace=my_namespace`)
 ```shell
 my_namespace/
     /my_package
@@ -83,16 +74,29 @@ my_namespace/
        my_module.py
 ```
 
+###### Namespace with path(`--with-top-namespace=my_namespace/subdir`)
+```shell
+my_namespace/
+    /my_package
+        /subdir
+           __init__.py
+           my_module.py
+```
 And will re-write the relevant module(s):
 
-(before)
+###### Default(no flag)
 ```python
 from my_package import my_function
 ```
 
-(after)
+###### Namespace(`--with-top-namespace=my_namespace`)
 ```python
 from my_namespace.my_package import my_function
+```
+
+###### Namespace with path(`--with-top-namespace=my_namespace/subdir`)
+```python
+from my_namespace.subdir.my_package import my_function
 ```
 
 ##### How is this done?

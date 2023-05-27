@@ -59,14 +59,14 @@ poetry build-project --with-top-namespace my_namespace
 
 #### The build output
 
-###### Default(no flag)
+Default behaviour of `build-project` (i.e. without any custom top namespace flag):
 ```shell
 /my_package
    __init__.py
    my_module.py
 ```
 
-###### Namespace(`--with-top-namespace=my_namespace`)
+By using the `--with-top-namespace` flag, the built artifact will look something like this:
 ```shell
 my_namespace/
     /my_package
@@ -74,29 +74,16 @@ my_namespace/
        my_module.py
 ```
 
-###### Namespace with path(`--with-top-namespace=my_namespace/subdir`)
-```shell
-my_namespace/
-    /my_package
-        /subdir
-           __init__.py
-           my_module.py
-```
 And will re-write the relevant module(s):
 
-###### Default(no flag)
+(before)
 ```python
 from my_package import my_function
 ```
 
-###### Namespace(`--with-top-namespace=my_namespace`)
+(after)
 ```python
 from my_namespace.my_package import my_function
-```
-
-###### Namespace with path(`--with-top-namespace=my_namespace/subdir`)
-```python
-from my_namespace.subdir.my_package import my_function
 ```
 
 ##### How is this done?

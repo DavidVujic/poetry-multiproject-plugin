@@ -4,7 +4,8 @@ from typing import List
 
 
 def create_namespace_path(top_ns: str, current: str) -> str:
-    return f"{top_ns}.{current}"
+    top_ns_module_path = top_ns.replace("/", ".")
+    return f"{top_ns_module_path}.{current}"
 
 
 def mutate_import(node: ast.Import, namespaces: List[str], top_ns: str) -> bool:
@@ -35,6 +36,7 @@ def mutate_import_from(
 
 
 def mutate_imports(node: ast.AST, namespaces: List[str], top_ns: str) -> bool:
+    ast.FormattedValue
     if isinstance(node, ast.Import):
         return mutate_import(node, namespaces, top_ns)
 

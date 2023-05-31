@@ -36,7 +36,6 @@ def mutate_import_from(
 
 
 def mutate_imports(node: ast.AST, namespaces: List[str], top_ns: str) -> bool:
-    ast.FormattedValue
     if isinstance(node, ast.Import):
         return mutate_import(node, namespaces, top_ns)
 

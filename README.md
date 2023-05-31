@@ -77,8 +77,8 @@ my_namespace/
 ###### Namespace with path(`--with-top-namespace=my_namespace/subdir`)
 ```shell
 my_namespace/
-    /my_package
-        /subdir
+    /subdir
+        /my_package
            __init__.py
            my_module.py
 ```

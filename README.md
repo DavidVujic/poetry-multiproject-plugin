@@ -2,6 +2,8 @@
 
 This is a Python `Poetry` plugin, adding the `build-project` and `check-project` commands.
 
+[![CodeScene Code Health](https://codescene.io/projects/36629/status-badges/code-health)](https://codescene.io/projects/36629)
+
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/DavidVujic/poetry-multiproject-plugin/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/DavidVujic/poetry-multiproject-plugin/tree/main)
 
 The `build-project` command will make it possible to use relative package includes.

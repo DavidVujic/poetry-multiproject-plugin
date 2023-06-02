@@ -34,4 +34,4 @@ def copy_project(project_file: Path, destination: Path) -> Path:
 
 
 def normalize_top_namespace(namespace: Union[str, None]) -> Union[str, None]:
-    return re.sub("[^a-zA-Z_]", "", namespace) if namespace else None
+    return re.sub("[^a-zA-Z_/]", "", namespace.strip("/")) if namespace else None

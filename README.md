@@ -28,7 +28,7 @@ The `build-project` command will collect the project-specific packages and build
 The Multiproject plugin makes it possible to organize Python projects according to the Polylith Architecture.
 The plugin is the foundation for the __Python tools for the Polylith Architecture__ - also implemented as a __Poetry__ plugin.
 
-For more about Polylith, have a look at the [documentation](https://davidvujic.github.io/python-polylith-docs/).
+For more about Polylith, have a look at the [Python-specific Polylith documentation](https://davidvujic.github.io/python-polylith-docs/).
 
 ### Libraries?
 Building libraries is also supported, but you will need to consider that the code will likely share the same top namespace with other libraries 

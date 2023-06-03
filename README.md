@@ -18,12 +18,12 @@ The `check-project` command is useful to check that dependencies are added prope
 It uses the `MyPy` tool under the hood, and will output any errors from the static type checker.
 
 
-[Use cases](#use-cases)
-[Usage](#usage)
-[Installation](#installation)
-[What does it do?](#what-does-it-do)
-[How is it different from the "poetry build" command?](#how-is-it-different-from-the-poetry-build-command)
-[Organizing code](#organizing-code)
+- [Use cases](#use-cases)
+- [Usage](#usage)
+- [Installation](#installation)
+- [What does it do?](#what-does-it-do)
+- [How is it different from the "poetry build" command?](#how-is-it-different-from-the-poetry-build-command)
+- [Organizing code](#organizing-code)
 
 ## Use cases
 

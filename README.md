@@ -18,11 +18,24 @@ The `check-project` command is useful to check that dependencies are added prope
 It uses the `MyPy` tool under the hood, and will output any errors from the static type checker.
 
 
+- [Use cases](#use-cases)
+- [Usage](#usage)
+- [Installation](#installation)
+- [What does it do?](#what-does-it-do)
+- [How is it different from the "poetry build" command?](#how-is-it-different-from-the-poetry-build-command)
+- [Organizing code](#organizing-code)
+
 ## Use cases
 
 ### Microservices and apps
 The main use case is to support having one or more microservices or apps in a Monorepo, and share code between the services with namespaced packages.
 The `build-project` command will collect the project-specific packages and build an installable artifact from it (i.e. a wheel or an sdist).
+
+### A basic building block for the Polylith Architecture
+The Multiproject plugin makes it possible to organize Python projects according to the Polylith Architecture.
+The plugin is the foundation for the __Python tools for the Polylith Architecture__ - also implemented as a __Poetry__ plugin.
+
+For more about Polylith, have a look at the [Python-specific Polylith documentation](https://davidvujic.github.io/python-polylith-docs/).
 
 ### Libraries?
 Building libraries is also supported, but you will need to consider that the code will likely share the same top namespace with other libraries 
@@ -160,15 +173,16 @@ packages = [
 
 This plugin will allow relative package includes. You will now be able to share code between projects.
 
-An suggested Monorepo structure, with the shared code extracted into a separate folder structure:
+## Organizing code
+An example Monorepo structure, having the shared code extracted into a separate folder structure:
 
 ``` shell
 projects/
   my_app/
-    pyproject.toml (including a shared package)
+    pyproject.toml (including selected shared packages)
 
   my_service/
-    pyproject.toml (including other shared packages)
+    pyproject.toml (including selected shared packages)
 
 shared/
   my_namespace/
@@ -179,4 +193,21 @@ shared/
     my_other_package/
       __init__.py
       code.py
+```
+
+A suggested structure, using [Polylith](https://davidvujic.github.io/python-polylith-docs/workspace/):
+
+``` shell
+workspace/
+  bases/
+  components/
+  development/
+  projects/
+
+  poetry.lock
+
+  pyproject.toml
+  workspace.toml
+
+  README.md
 ```

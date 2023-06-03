@@ -166,15 +166,16 @@ packages = [
 
 This plugin will allow relative package includes. You will now be able to share code between projects.
 
-An suggested Monorepo structure, with the shared code extracted into a separate folder structure:
+## Organizing code
+An example Monorepo structure, having the shared code extracted into a separate folder structure:
 
 ``` shell
 projects/
   my_app/
-    pyproject.toml (including a shared package)
+    pyproject.toml (including selected shared packages)
 
   my_service/
-    pyproject.toml (including other shared packages)
+    pyproject.toml (including selected shared packages)
 
 shared/
   my_namespace/
@@ -185,4 +186,21 @@ shared/
     my_other_package/
       __init__.py
       code.py
+```
+
+A suggested structure, using [Polylith](https://davidvujic.github.io/python-polylith-docs/workspace/):
+
+``` shell
+workspace/
+  bases/
+  components/
+  development/
+  projects/
+
+  poetry.lock
+
+  pyproject.toml
+  workspace.toml
+
+  README.md
 ```

@@ -24,6 +24,12 @@ It uses the `MyPy` tool under the hood, and will output any errors from the stat
 The main use case is to support having one or more microservices or apps in a Monorepo, and share code between the services with namespaced packages.
 The `build-project` command will collect the project-specific packages and build an installable artifact from it (i.e. a wheel or an sdist).
 
+### The Polylith Architecture
+The Multiproject plugin makes it possible to organize Python projects according to the Polylith Architecture.
+The plugin is the foundation for the __Python tools for the Polylith Architecture__ - also implemented as a __Poetry__ plugin.
+
+For more about Polylith, have a look at the [documentation](https://davidvujic.github.io/python-polylith-docs/).
+
 ### Libraries?
 Building libraries is also supported, but you will need to consider that the code will likely share the same top namespace with other libraries 
 built from the same monorepo. It depends on your monorepo structure. This will likely be a problem when more than one of your libraries are installed into the same virtual environment.

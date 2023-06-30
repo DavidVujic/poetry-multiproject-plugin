@@ -26,6 +26,8 @@ def copy_packages(
         shutil.copytree(
             source,
             to,
-            ignore=shutil.ignore_patterns("__pycache__", ".mypy_cache"),
+            ignore=shutil.ignore_patterns(
+                "__pycache__", ".venv", ".mypy_cache", ".git"
+            ),
             dirs_exist_ok=True,
         )

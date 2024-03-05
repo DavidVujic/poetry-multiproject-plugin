@@ -16,7 +16,7 @@ poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 python = "^3.8"
 poetry = "^1.2"
 tomlkit = "0.*"
-mypy = "*"
+mypy = "1.*"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"

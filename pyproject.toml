@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "1.3.4"
+version = "1.3.5"
 description = "A Poetry plugin that makes it possible to use relative package includes."
 authors = ["David Vujic"]
 license = "MIT"
@@ -15,8 +15,8 @@ poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 [tool.poetry.dependencies]
 python = "^3.8"
 poetry = "^1.2"
-tomlkit = "^0.11.5"
-mypy = "^0.991"
+tomlkit = "0.*"
+mypy = "1.*"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"

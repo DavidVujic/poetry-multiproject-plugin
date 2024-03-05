@@ -40,13 +40,10 @@ def to_valid_dist_packages(
     return local + relative_packages
 
 
-def to_namespace_entry(entry: str, top_ns: str) -> str:
+def to_valid_entry(entry: str, top_ns: str) -> str:
     prefix = f"{top_ns}."
 
-    if entry.startswith(prefix):
-        return entry
-
-    return f"{prefix}{entry}"
+    return entry if entry.startswith(prefix) else f"{prefix}{entry}"
 
 
 def generate_valid_dist_project_file(
@@ -66,11 +63,11 @@ def generate_valid_dist_project_file(
 
     copy["tool"]["poetry"]["packages"].multiline(True)
 
-    script_entries = copy["tool"]["poetry"].get("scripts", {})
+    entries = copy["tool"]["poetry"].get("scripts", {})
 
-    if top_ns and script_entries:
-        copy["tool"]["poetry"]["scripts"] = {
-            k: to_namespace_entry(v, top_ns) for k, v in script_entries.items()
-        }
+    if top_ns and entries:
+        rewritten_entries = {k: to_valid_entry(v, top_ns) for k, v in entries.items()}
+
+        copy["tool"]["poetry"]["scripts"] = rewritten_entries
 
     return tomlkit.dumps(copy)

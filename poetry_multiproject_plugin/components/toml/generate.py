@@ -63,11 +63,11 @@ def generate_valid_dist_project_file(
 
     copy["tool"]["poetry"]["packages"].multiline(True)
 
-    entries = copy["tool"]["poetry"].get("scripts", {})
+    scripts = copy["tool"]["poetry"].get("scripts", {})
 
-    if top_ns and entries:
-        rewritten_entries = {k: to_valid_entry(v, top_ns) for k, v in entries.items()}
+    if top_ns and scripts:
+        rewritten_scripts = {k: to_valid_entry(v, top_ns) for k, v in scripts.items()}
 
-        copy["tool"]["poetry"]["scripts"] = rewritten_entries
+        copy["tool"]["poetry"]["scripts"] = rewritten_scripts
 
     return tomlkit.dumps(copy)

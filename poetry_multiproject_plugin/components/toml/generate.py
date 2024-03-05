@@ -40,6 +40,15 @@ def to_valid_dist_packages(
     return local + relative_packages
 
 
+def to_namespace_entry(entry: str, top_ns: str) -> str:
+    prefix = f"{top_ns}."
+
+    if entry.startswith(prefix):
+        return entry
+
+    return f"{prefix}{entry}"
+
+
 def generate_valid_dist_project_file(
     data: TOMLDocument, top_ns: Union[str, None]
 ) -> str:
@@ -56,5 +65,12 @@ def generate_valid_dist_project_file(
         copy["tool"]["poetry"]["packages"].append(package)
 
     copy["tool"]["poetry"]["packages"].multiline(True)
+
+    script_entries = copy["tool"]["poetry"].get("scripts", {})
+
+    if top_ns and script_entries:
+        copy["tool"]["poetry"]["scripts"] = {
+            k: to_namespace_entry(v, top_ns) for k, v in script_entries.items()
+        }
 
     return tomlkit.dumps(copy)

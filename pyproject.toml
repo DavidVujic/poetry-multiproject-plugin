@@ -15,7 +15,7 @@ poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 [tool.poetry.dependencies]
 python = "^3.8"
 poetry = "^1.2"
-tomlkit = "*"
+tomlkit = "0.*"
 mypy = "*"
 
 [tool.poetry.group.dev.dependencies]

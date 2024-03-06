@@ -40,6 +40,12 @@ def to_valid_dist_packages(
     return local + relative_packages
 
 
+def to_valid_entry(entry: str, top_ns: str) -> str:
+    prefix = f"{top_ns}."
+
+    return entry if prefix in entry else f"{prefix}{entry}"
+
+
 def generate_valid_dist_project_file(
     data: TOMLDocument, top_ns: Union[str, None]
 ) -> str:
@@ -56,5 +62,12 @@ def generate_valid_dist_project_file(
         copy["tool"]["poetry"]["packages"].append(package)
 
     copy["tool"]["poetry"]["packages"].multiline(True)
+
+    scripts = copy["tool"]["poetry"].get("scripts", {})
+
+    if top_ns and scripts:
+        rewritten_scripts = {k: to_valid_entry(v, top_ns) for k, v in scripts.items()}
+
+        copy["tool"]["poetry"]["scripts"] = rewritten_scripts
 
     return tomlkit.dumps(copy)

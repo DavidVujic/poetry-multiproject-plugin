@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "1.3.5"
+version = "1.4.0"
 description = "A Poetry plugin that makes it possible to use relative package includes."
 authors = ["David Vujic"]
 license = "MIT"
@@ -22,6 +22,7 @@ mypy = "1.*"
 black = "^22.10.0"
 isort = "^5.10.1"
 flake8 = "^5.0.4"
+pytest = "^8.0.2"
 
 [tool.isort]
 profile = "black"

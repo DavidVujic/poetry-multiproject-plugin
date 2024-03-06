@@ -37,15 +37,15 @@ def test_generate_project_file_without_any_changes():
 
 
 def test_generate_project_file_with_custom_namespace_for_packages():
-    data = generate_toml(pyproject_lib, "src")
+    data = generate_toml(pyproject_lib, "xyz")
 
-    assert data["tool"]["poetry"]["packages"] == [{"include": "src"}]
+    assert data["tool"]["poetry"]["packages"] == [{"include": "xyz"}]
 
 
 def test_generate_project_file_with_custom_namespace_in_script_entry_point():
-    data = generate_toml(pyproject_cli, "src")
+    data = generate_toml(pyproject_cli, "xyz")
 
-    assert data["tool"]["poetry"]["scripts"] == {"my_cli": "src.my.console.app:run"}
+    assert data["tool"]["poetry"]["scripts"] == {"my_cli": "xyz.my.console.app:run"}
 
 
 def test_generate_project_file_with_unchanged_script_entry_point():

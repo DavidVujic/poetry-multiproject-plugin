@@ -43,7 +43,7 @@ def to_valid_dist_packages(
 def to_valid_entry(entry: str, top_ns: str) -> str:
     prefix = f"{top_ns}."
 
-    return entry if entry.startswith(prefix) else f"{prefix}{entry}"
+    return entry if prefix in entry else f"{prefix}{entry}"
 
 
 def generate_valid_dist_project_file(

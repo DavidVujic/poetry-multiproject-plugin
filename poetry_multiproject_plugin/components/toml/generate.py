@@ -1,4 +1,4 @@
-from typing import Dict, List, Union, cast
+from typing import Dict, List, Set, Union, cast
 
 import tomlkit
 from tomlkit.toml_document import TOMLDocument
@@ -40,10 +40,30 @@ def to_valid_dist_packages(
     return local + relative_packages
 
 
-def to_valid_entry(entry: str, top_ns: str) -> str:
-    prefix = f"{top_ns}."
+def parse_ns_from_relative_package_includes(data: dict) -> Set[str]:
+    packages = data["tool"]["poetry"]["packages"]
+    relative_paths = {p.get("include") for p in packages if is_relative(p)}
 
-    return entry if prefix in entry else f"{prefix}{entry}"
+    return {str.replace(p, "/", ".") for p in relative_paths}
+
+
+def to_valid_entry(entry: str, top_ns: str, data: dict) -> str:
+    """Constructing an entry, optionally with a custom top namespace
+
+    Appends the custom top namespace when there are relative package includes
+    that matches the entry point namespace,
+    and when the custom top namespace isn't already added in configuration.
+    """
+    prefix = f"{top_ns}."
+    ns_from_package_includes = parse_ns_from_relative_package_includes(data)
+
+    contains_ns = any((ns in entry) for ns in ns_from_package_includes)
+    contains_prefix = prefix in entry
+
+    if contains_ns and not contains_prefix:
+        return f"{prefix}{entry}"
+
+    return entry
 
 
 def generate_valid_dist_project_file(
@@ -66,7 +86,9 @@ def generate_valid_dist_project_file(
     scripts = copy["tool"]["poetry"].get("scripts", {})
 
     if top_ns and scripts:
-        rewritten_scripts = {k: to_valid_entry(v, top_ns) for k, v in scripts.items()}
+        rewritten_scripts = {
+            k: to_valid_entry(v, top_ns, data) for k, v in scripts.items()
+        }
 
         copy["tool"]["poetry"]["scripts"] = rewritten_scripts
 

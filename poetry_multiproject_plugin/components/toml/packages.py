@@ -11,11 +11,17 @@ def join_package_paths(package) -> Path:
     return Path(from_path).joinpath(include_path)
 
 
+def contains_wildcard(path: Path) -> bool:
+    return "*" in path.as_posix()
+
+
 def create_path_data(package) -> dict:
     from_path = join_package_paths(package)
 
-    to_path = Path(package["include"])
-    return {"from": from_path, "to": package["include"]}
+    a = {"from": from_path}
+    b = {"to": package["include"]} if not contains_wildcard(from_path) else {}
+
+    return {**a, **b}
 
 
 def packages_to_paths(toml: TOMLDocument) -> List[dict]:

@@ -20,7 +20,7 @@ def copy_packages(
 
     for p in relative_package_paths:
         p_from = p["from"]
-        p_to = p.get("to", "")
+        p_to = p["to"]
         source = Path(project_file.parent / p_from)
 
         to = f"{top_ns}/{p_to}" if top_ns else p_to

@@ -12,7 +12,10 @@ def join_package_paths(package) -> Path:
 
 
 def create_path_data(package) -> dict:
-    return {"from": join_package_paths(package), "to": package["include"]}
+    from_path = join_package_paths(package)
+
+    to_path = Path(package["include"])
+    return {"from": from_path, "to": package["include"]}
 
 
 def packages_to_paths(toml: TOMLDocument) -> List[dict]:

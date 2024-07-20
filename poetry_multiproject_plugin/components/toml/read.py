@@ -29,17 +29,11 @@ def project_name(path: Path) -> str:
 
 
 def parse_exclude_path(data: dict) -> Union[str, None]:
-    if data.get("format"):
-        return None
-
-    return data.get("path")
+    return None if data.get("format") else data.get("path")
 
 
 def parse_exclude_pattern(data: Union[str, dict]) -> Union[str, None]:
-    if isinstance(data, dict):
-        return parse_exclude_path(data)
-
-    return data
+    return parse_exclude_path(data) if isinstance(data, dict) else data
 
 
 def parse_exclude_patterns(data: dict) -> Set[str]:

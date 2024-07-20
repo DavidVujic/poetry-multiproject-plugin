@@ -1,9 +1,9 @@
-import shutil
 from pathlib import Path
 from typing import Union
 
 from poetry_multiproject_plugin.components.toml import read
 from poetry_multiproject_plugin.components.toml.packages import packages_to_paths
+from poetry_multiproject_plugin.components.project import copying
 
 
 def is_relative_path(path: str) -> bool:
@@ -15,6 +15,7 @@ def copy_packages(
 ) -> None:
     content = read.toml(project_file)
     package_paths = packages_to_paths(content)
+    exclude_patterns = read.parse_exclude_patterns(content)
 
     relative_package_paths = [p for p in package_paths if is_relative_path(p["from"])]
 
@@ -27,11 +28,4 @@ def copy_packages(
 
         to_path = Path(destination / to)
 
-        shutil.copytree(
-            source,
-            to_path,
-            ignore=shutil.ignore_patterns(
-                "__pycache__", ".venv", ".mypy_cache", ".git"
-            ),
-            dirs_exist_ok=True,
-        )
+        copying.copy_tree(source, to_path, exclude_patterns)

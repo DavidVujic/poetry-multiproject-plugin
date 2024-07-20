@@ -1,8 +1,8 @@
 import re
-import shutil
 from pathlib import Path
 from typing import Union
 
+from poetry_multiproject_plugin.components.project import copying
 from poetry_multiproject_plugin.components.toml import read
 
 
@@ -19,21 +19,11 @@ def get_destination(project_file: Path, prefix: str) -> Path:
 
 
 def copy_project(project_file: Path, destination: Path) -> Path:
-    source = project_file.parent.as_posix()
+    source = project_file.parent
 
-    res = shutil.copytree(
-        source,
-        destination,
-        ignore=shutil.ignore_patterns(
-            "*.pyc",
-            "__pycache__",
-            ".venv",
-            ".mypy_cache",
-            "node_modules",
-            ".git",
-        ),
-        dirs_exist_ok=True,
-    )
+    exclude_patterns = read.get_exclude_patterns(project_file)
+
+    res = copying.copy_tree(source, destination, exclude_patterns)
 
     return Path(res)
 

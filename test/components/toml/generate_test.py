@@ -73,4 +73,6 @@ def test_generate_project_file_with_unchanged_script_entry_point_when_ns_is_in_p
 def test_generate_project_file_with_unchanged_script_entry_point_using_local_module():
     data = generate_toml(pyproject_cli_with_local_modules, "xyz")
 
-    assert data["tool"]["poetry"]["scripts"] == {"my_cli": "my_local_module.console.app:run"}
+    assert data["tool"]["poetry"]["scripts"] == {
+        "my_cli": "my_local_module.console.app:run"
+    }

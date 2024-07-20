@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Set, Union
 
 from tomlkit.toml_document import TOMLDocument
 from tomlkit.toml_file import TOMLFile
@@ -26,3 +26,31 @@ def project_name(path: Path) -> str:
     data: dict = toml(path)
 
     return data["tool"]["poetry"]["name"]
+
+
+def parse_exclude_path(data: dict) -> Union[str, None]:
+    if data.get("format"):
+        return None
+
+    return data.get("path")
+
+
+def parse_exclude_pattern(data: Union[str, dict]) -> Union[str, None]:
+    if isinstance(data, dict):
+        return parse_exclude_path(data)
+
+    return data
+
+
+def parse_exclude_patterns(data: dict) -> Set[str]:
+    config: list = data["tool"]["poetry"].get("exclude", [])
+
+    res = {parse_exclude_pattern(c) for c in config}
+
+    return {r for r in res if r}
+
+
+def get_exclude_patterns(path: Path) -> Set[str]:
+    data: dict = toml(path)
+
+    return parse_exclude_patterns(data)

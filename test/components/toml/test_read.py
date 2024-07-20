@@ -4,35 +4,20 @@ from poetry_multiproject_plugin.components.toml import read
 
 pyproject = """\
 [tool.poetry]
-packages = [
-    {include = "hello", from = "../world"},
-]
 """
 
 pyproject_with_exclude_pattern = """\
 [tool.poetry]
-packages = [
-    {include = "hello", from = "../world"},
-]
-
 exclude = ["testing.json"]
 """
 
 pyproject_with_complex_exclude_pattern = """\
 [tool.poetry]
-packages = [
-    {include = "hello", from = "../world"},
-]
-
 exclude = [{"path" = "testing.json"}]
 """
 
 pyproject_with_complex_exclude_pattern_containing_format = """\
 [tool.poetry]
-packages = [
-    {include = "hello", from = "../world"},
-]
-
 exclude = [{"path" = "testing.json", "format" = "wheel"}]
 """
 

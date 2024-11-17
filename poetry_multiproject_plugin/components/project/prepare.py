@@ -6,16 +6,27 @@ from poetry_multiproject_plugin.components.project import copying
 from poetry_multiproject_plugin.components.toml import read
 
 
-def get_destination(project_file: Path, prefix: str) -> Path:
+def get_destination_folder(project_file: Path, temp_path: Union[str, None]) -> Path:
+    if temp_path:
+        return Path(temp_path)
+
     grandparent = project_file.parent.parent
 
     if project_file.parent == grandparent:
         raise ValueError(f"Failed to navigate to the parent of {project_file.parent}")
 
+    return grandparent
+
+
+def get_destination(
+    project_file: Path, prefix: str, temp_path: Union[str, None]
+) -> Path:
+    folder = get_destination_folder(project_file, temp_path)
+
     project_name = read.project_name(project_file)
     sibling = f".{prefix}_{project_name}"
 
-    return Path(grandparent / sibling)
+    return Path(folder / sibling)
 
 
 def copy_project(project_file: Path, destination: Path) -> Path:

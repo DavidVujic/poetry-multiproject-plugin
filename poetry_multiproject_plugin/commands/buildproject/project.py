@@ -26,7 +26,12 @@ def create_command_options() -> List[Option]:
             long_name="with-top-namespace",
             description="To arrange relative includes, and to modify import statements.",
             flag=False,
-        )
+        ),
+        option(
+            long_name="custom-temp-path",
+            description="Temporary path to use for reading, writing and deleting content during the project build.",
+            flag=False,
+        ),
     ]
 
     return parent + current
@@ -37,8 +42,10 @@ class ProjectBuildCommand(BuildCommand):
 
     options = create_command_options()
 
-    def collect_project(self, path: Path, top_ns: Union[str, None]) -> Path:
-        destination = prepare.get_destination(path, "prepare")
+    def collect_project(
+        self, path: Path, top_ns: Union[str, None], temp_path: Union[str, None]
+    ) -> Path:
+        destination = prepare.get_destination(path, "prepare", temp_path)
 
         prepare.copy_project(path, destination)
         packages.copy_packages(path, destination, top_ns)
@@ -80,7 +87,9 @@ class ProjectBuildCommand(BuildCommand):
         self.line(f"Using <c1>{path}</c1>")
 
         top_ns = prepare.normalize_top_namespace(self.option("with-top-namespace"))
-        project_path = self.collect_project(path, top_ns)
+        temp_path = self.option("custom-temp-path")
+
+        project_path = self.collect_project(path, top_ns, temp_path)
 
         if top_ns:
             self.rewrite_modules(project_path, top_ns)

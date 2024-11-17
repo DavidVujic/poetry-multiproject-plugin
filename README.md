@@ -65,6 +65,20 @@ Check the code, with a custom `MyPy` configuration to override the defaults:
 poetry check-project --config-file <PATH-TO-MYPY.INI-CONFIG-FILE>
 ```
 
+### Available command options
+
+#### Custom temp path
+A custom temporary path to use for reading, writing and deleting project content during the project build.
+This option is useful for environments with restrictions on where scripts are allowed to store content.
+
+The default temp path will be created as a sibling to the project to build, and is the recommended way in most cases.
+
+``` shell
+poetry build-project --custom-temp-path /tmp
+poetry check-project --custom-temp-path /tmp
+```
+
+
 ### Usage for libraries
 The `build-project` has a solution to the problem with top namespaces in libraries for __Python 3.9__ and more.
 You can choose a custom namespace to be used in the build process, by using the `--with-top-namespace` flag. 

@@ -71,7 +71,7 @@ poetry check-project --config-file <PATH-TO-MYPY.INI-CONFIG-FILE>
 A custom temporary path to use for reading, writing and deleting project content during the project build.
 This option is useful for environments with restrictions on where scripts are allowed to store content.
 
-The default temp path will be created as a sibling to the project to build, and is the recommended way in most cases.
+NOTE: The default temp path will be created as a sibling to the project to build, and is the recommended way in most cases.
 
 ``` shell
 poetry build-project --custom-temp-path /tmp

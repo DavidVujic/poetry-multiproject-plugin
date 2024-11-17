@@ -1,6 +1,6 @@
 import itertools
 from pathlib import Path
-from typing import List
+from typing import List, Union
 
 from cleo.helpers import option
 from cleo.io.outputs.output import Verbosity
@@ -44,11 +44,16 @@ class ProjectCheckCommand(Command):
             long_name="config-file",
             description="Path to mypy config file. Use it to override the defaults.",
             flag=False,
-        )
+        ),
+        option(
+            long_name="custom-temp-path",
+            description="Temporary path to use for reading, writing and deleting content during the project check.",
+            flag=False,
+        ),
     ]
 
-    def collect_project(self, path: Path) -> Path:
-        destination = prepare.get_destination(path, "check")
+    def collect_project(self, path: Path, temp_path: Union[str, None]) -> Path:
+        destination = prepare.get_destination(path, "check", temp_path)
 
         prepare.copy_project(path, destination)
         packages.copy_packages(path, destination)
@@ -64,9 +69,11 @@ class ProjectCheckCommand(Command):
 
     def handle(self):
         is_verbose = self.option("verbose")
+        temp_path = self.option("custom-temp-path")
+
         path = self.poetry.file.path.absolute()
 
-        project_path = self.collect_project(path)
+        project_path = self.collect_project(path, temp_path)
         self.prepare_for_build(project_path.absolute())
 
         if not is_verbose:

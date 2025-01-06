@@ -21,6 +21,16 @@ packages = [
 my_cli = "hello.console.app:run"
 """
 
+pyproject_pep_621_cli = """\
+[tool.poetry]
+packages = [
+    {include = "hello", from = "../world"},
+]
+
+[project.scripts]
+my_cli = "hello.console.app:run"
+"""
+
 pyproject_cli_with_local_modules = """\
 [tool.poetry]
 packages = [
@@ -56,6 +66,12 @@ def test_generate_project_file_with_custom_namespace_in_script_entry_point():
     data = generate_toml(pyproject_cli, "xyz")
 
     assert data["tool"]["poetry"]["scripts"] == {"my_cli": "xyz.hello.console.app:run"}
+
+
+def test_generate_project_file_with_custom_namespace_in_script_entry_point_for_pep_621_project():
+    data = generate_toml(pyproject_pep_621_cli, "xyz")
+
+    assert data["project"]["scripts"] == {"my_cli": "xyz.hello.console.app:run"}
 
 
 def test_generate_project_file_with_unchanged_script_entry_point():

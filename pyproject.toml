@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poetry-multiproject-plugin"
-version = "1.8.0"
+version = "1.8.1"
 description = "A Poetry plugin that makes it possible to use relative package includes."
 authors = ["David Vujic"]
 license = "MIT"

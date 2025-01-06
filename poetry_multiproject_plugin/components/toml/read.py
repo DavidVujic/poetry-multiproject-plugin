@@ -25,7 +25,9 @@ def package_paths(path: Path) -> List[Path]:
 def project_name(path: Path) -> str:
     data: dict = toml(path)
 
-    return data["tool"]["poetry"]["name"]
+    pep_621_name = data.get("project", {}).get("name")
+
+    return pep_621_name or data["tool"]["poetry"]["name"]
 
 
 def parse_exclude_path(data: dict) -> Union[str, None]:

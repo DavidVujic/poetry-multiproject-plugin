@@ -79,7 +79,12 @@ class ProjectBuildCommand(BuildCommand):
     def prepare_for_build(self, path: Path):
         project_poetry = Factory().create_poetry(path)
 
-        self.set_poetry(project_poetry)
+        if hasattr(self, "set_poetry"):
+            self.set_poetry(project_poetry)
+        elif hasattr(self, "_poetry"):
+            self._poetry = project_poetry
+        else:
+            raise ValueError("Cannot find expected Poetry Command internals.")
 
     def handle(self):
         path = self.poetry.file.path.absolute()

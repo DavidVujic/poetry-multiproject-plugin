@@ -1,12 +1,12 @@
 version: '2.1'
 orbs:
-  python: circleci/python@2.1.1
+  python: circleci/python@4.0.0
 
 jobs:
   test:
     executor:
       name: python/default
-      tag: "3.8"
+      tag: "3.10"
     steps:
       - checkout
       - python/install-packages:

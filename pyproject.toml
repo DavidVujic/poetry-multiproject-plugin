@@ -1,28 +1,32 @@
-[tool.poetry]
+[project]
 name = "poetry-multiproject-plugin"
-version = "1.8.4"
+version = "2.0.0"
 description = "A Poetry plugin that makes it possible to use relative package includes."
-authors = ["David Vujic"]
-license = "MIT"
-homepage = "https://github.com/davidvujic/poetry-multiproject-plugin"
-repository = "https://github.com/davidvujic/poetry-multiproject-plugin"
+requires-python = ">=3.10"
+authors = [{name = "David Vujic"}]
 readme = "README.md"
-packages = [{include = "poetry_multiproject_plugin"}]
+keywords = ["poetry", "plugin", "packaging", "monorepo", "polylith", "workspace"]
+license = "MIT"
+dependencies = [
+    "poetry",
+    "tomlkit==0.*",
+    "mypy",
+]
 
-[tool.poetry.plugins."poetry.application.plugin"]
+[project.urls]
+Homepage = "https://github.com/davidvujic/poetry-multiproject-plugin"
+Repository = "https://github.com/davidvujic/poetry-multiproject-plugin"
+
+[project.entry-points."poetry.application.plugin"]
 poetry-multiproject-plugin = "poetry_multiproject_plugin:MultiProjectPlugin"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-poetry = "*"
-tomlkit = "0.*"
-mypy = "1.*"
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-isort = "^5.10.1"
-flake8 = "^5.0.4"
-pytest = "^8.0.2"
+[dependency-groups]
+dev = [
+    "black==26.*",
+    "isort==9.*",
+    "flake8==7.*",
+    "pytest==9.*",
+]
 
 [tool.isort]
 profile = "black"

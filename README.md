@@ -4,7 +4,7 @@ This is a Python `Poetry` plugin, adding the `build-project` and `check-project`
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/DavidVujic/poetry-multiproject-plugin/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/DavidVujic/poetry-multiproject-plugin/tree/main)
 
-[![CodeScene Code Health](https://codescene.io/projects/36629/status-badges/code-health)](https://codescene.io/projects/36629)
+[![CodeScene Average Code Health](https://codescene.io/projects/36629/status-badges/average-code-health)](https://codescene.io/projects/36629)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DavidVujic_poetry-multiproject-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DavidVujic_poetry-multiproject-plugin)
 
